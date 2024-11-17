@@ -20,6 +20,7 @@ def extract_input_output(entry, dataset="jbb-JBC"):
         print(f"Dataset {dataset} not recognized.")
         raise NotImplementedError
 
+
 def jsonl_to_df(file_path, dataset="jbb-JBC"):
     # Initialize a list to store processed data
     data = []
@@ -52,9 +53,9 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                         'category': category,
                         'jailbroken': jailbroken,
                         'supervisor': supervisor,
-                        'jailbreak': jailbreak,
                         'user_msg': user_msg,
-                        'assistant_msg': assistant_msg
+                        'assistant_msg': assistant_msg,
+                        'classification': jailbreak
                     })
     else:
         print(f"Dataset {dataset} not recognized.")

@@ -1,6 +1,10 @@
 from sklearn.metrics import accuracy_score, recall_score, precision_score
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils import jsonl_to_df
+import seaborn as sns
+
+sns.set_theme()
 
 
 def compute_clf_metrics(y_true, y_pred):
@@ -26,10 +30,18 @@ def assess_supervisor_perf(df, dataset):
 def compare_supervisor_perf(df, dataset):
     perfs = df.groupby('supervisor').apply(assess_supervisor_perf, dataset)
     # three bar plot: accuracy, recall, precision
-    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-    perfs.plot(kind='bar', ax=axs)
-    axs[0].set_title('Accuracy')
-    axs[1].set_title('Recall')
-    axs[2].set_title('Precision')
+    fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+    cats = perfs.columns
+    colors = ['skyblue', 'salmon', 'lightgreen']
+    for i, cat in enumerate(cats):
+        ax = axs[i]
+        perfs[cat].plot(kind='barh', ax=ax, color=colors[i])
+        ax.set_xlim(0, 1)
+        ax.set_title(cat.capitalize())
     plt.suptitle(f'Supervisor Performance on dataset {dataset}')
+    plt.tight_layout()
     plt.show()
+
+
+df = jsonl_to_df('datasets/jbb-JBC.jsonl', 'jbb-JBC')
+compare_supervisor_perf(df, 'jbb-JBC')
