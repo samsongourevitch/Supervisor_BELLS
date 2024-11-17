@@ -43,6 +43,9 @@ We first create the traces from the datasets and then apply LeNotre to flag them
 
 We obtain 100% recall and 90% precision on the <code>jbb-JBC</code> dataset. This is better than all the other LLM safeguards we compare against, except <code>langkit_proactive</code> which has 100% precision but very low recall.
 
+It might seem surprising at first that our simple model outperforms more complex safeguards. This is because LeNotre was designed to deal with jailbreaks and hallucinations, and is thus more specialized than the other safeguards which are more general. For instance, some safeguards are designed to prevent prompt injection, which is not the case here. Thus, the non-general nature of LeNotre explains why it performs better than the other safeguards.
+Also, note that the <code>jbb-JBC</code> dataset is relatively small, which means that the performance of the safeguards is not necessarily representative of their performance on larger datasets. Likewise for LeNotre.
+
 ### traces_unrealistic dataset (hallucinations)
 
 <img src="images/visualization_traces_unrealistic.png" alt="Performance on traces_unrealistic dataset" width="50%">
