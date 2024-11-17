@@ -51,7 +51,7 @@ To run the experiments, you need to install the dependencies in `requirements.tx
 
 ```python src/evaluation.py --help``` to understand the arguments.
 
-```python src/evaluation.py --input_file jbb-JBC --version 2 --merge True --debug_mode False ``` to run the experiments on the jbb-JB dataset.
+```python src/evaluation.py --input_file jbb-JBC --version 2 --merge True --debug_mode False ``` to run the experiments on the jbb-JBC dataset.
 
 To visualize the results, you can run the following command:
 
