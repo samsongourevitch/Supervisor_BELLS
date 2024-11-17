@@ -48,7 +48,7 @@ def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False)
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
-                        "is_hallucination": data['extra']['is_hallucination'],
+                        "is_hallucination": data["calls"][0]["extra"]["is_hallucination"],
                         'supervisor': 'lenotre0',
                         "system_msg": system_msg,
                         "user_msg": user_msg,
@@ -64,7 +64,6 @@ def main():
     """
     Main function to process the JSONL file for safety classification.
     """
-
     # Argument parsing
     parser = argparse.ArgumentParser(description="Evaluate model responses to harmful prompts.")
     parser.add_argument("--input_file", type=str, help="Name of the file of the input JSONL file.", default="jbb-JBC")
