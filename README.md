@@ -57,7 +57,7 @@ To visualize the results, you can run the following command:
 
 ```python src/visualization.py --help``` to understand the arguments.
 
-```python src/visualization.py --file_path outputs/evaluation_merged_jbb-JBC_1117-1635.csv  --dataset jbb-JBC``` to visualize the results on the jbb-JB dataset.
+```python src/visualization.py --file_path outputs/evaluation_merged_jbb-JBC_MMDD-HHMM.csv  --dataset jbb-JBC``` to visualize the results on the jbb-JB dataset.
 
 
 ## Experiments
