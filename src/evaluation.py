@@ -33,6 +33,7 @@ def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False)
                         "category": data['extra']['category'],
                         "jailbroken": data['extra']['jailbroken'],
                         "supervisor": "lenotre0",
+                        "system_msg": system_msg,
                         "user_msg": user_msg,
                         "assistant_msg": assistant_msg,
                         "classification": classification
@@ -68,6 +69,7 @@ def main():
     parser = argparse.ArgumentParser(description="Evaluate model responses to harmful prompts.")
     parser.add_argument("--input_file", type=str, help="Name of the file of the input JSONL file.", default="jbb-JBC")
     parser.add_argument("--version", type=int, help="Version of the evaluation prompt to use.", default=0)
+    parser.add_argument("--merge", help="Merge with the other supervisors.", default=False)
     parser.add_argument("--debug_mode", help="Enable debug mode.", default=True)
     args = parser.parse_args()
 
@@ -80,6 +82,13 @@ def main():
     process_jsonl(input_file, output_file, args.input_file, args.version, args.debug_mode)
     print(f"Results saved to: {output_file}")
 
+    if args.merge:
+        print("Merging with other supervisors...")
+        df_supervisors = jsonl_to_df(input_file, args.input_file)
+        df_merged = pd.concat([pd.read_csv(output_file), df_supervisors])
+        output_file_merged = "outputs/" + "evaluation_merged_" + args.input_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
+        df_merged.to_csv(output_file_merged, index=False)
+        print(f"Merged results saved to: {output_file_merged}")
 
 if __name__ == "__main__":
     main()
