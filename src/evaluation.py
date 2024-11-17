@@ -74,7 +74,7 @@ def main():
     # Input and output file paths
     input_file = "datasets/" + args.input_file + ".jsonl"
     # add day and time to the output file name
-    output_file = "outputs/" + "evaluation_" args.input_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
+    output_file = "outputs/" + "evaluation_" + args.input_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
 
     print(f"Processing file: {input_file}")
     process_jsonl(input_file, output_file, args.input_file, args.debug_mode)
