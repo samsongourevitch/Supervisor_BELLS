@@ -58,10 +58,12 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                         jailbreak = jailbreak > 0.5 # DISCUTABLE
 
                     data.append({
+                        'dataset': record['dataset'],
                         'goal': goal,
                         'category': category,
                         'jailbroken': jailbroken,
                         'supervisor': supervisor,
+                        'system_msg': None,
                         'user_msg': user_msg,
                         'assistant_msg': assistant_msg,
                         'classification': jailbreak,
@@ -82,7 +84,7 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                 is_hallucination = record['calls'][0]['extra'][0]['is_hallucination']
 
                 # Extract user and assistant messages from 'calls' section
-                input_msg = record['calls'][0]['messages'][0]['content']
+                system_msg = record['calls'][0]['messages'][0]['content']
                 user_msg = record['calls'][0]['messages'][1]['content']
                 assistant_msg = record['calls'][0]['messages'][2]['content']
 
@@ -94,13 +96,13 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                         hallucination = hallucination.lower() in ["true", "yes"]
                     
                     data.append({
-                        'failure_types': failure_types,
-                        'supervisor': supervisor,
-                        'hallucination': hallucination,
+                        'dataset': record['dataset'],
                         'is_hallucination': is_hallucination,
-                        'input_msg': input_msg,
+                        'supervisor': supervisor,
+                        'system_msg': system_msg,
                         'user_msg': user_msg,
-                        'assistant_msg': assistant_msg
+                        'assistant_msg': assistant_msg,
+                        'classification': hallucination,
                     })
 
     else:

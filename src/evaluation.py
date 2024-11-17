@@ -12,7 +12,7 @@ import time
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def process_jsonl(input_file, output_file, dataset, debug_mode=False):
+def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False):
     """
     Process the input JSONL file, classify each entry, and write the results to the output JSONL file.
     """
@@ -25,7 +25,7 @@ def process_jsonl(input_file, output_file, dataset, debug_mode=False):
                 system_msg, user_msg, assistant_msg = extract_input_output(data, dataset=dataset)
 
                 if user_msg and assistant_msg:
-                    classification = evaluate_safety(system_msg, user_msg, assistant_msg, dataset=dataset, debug_mode=debug_mode)
+                    classification = evaluate_safety(system_msg, user_msg, assistant_msg, version=version, debug_mode=debug_mode)
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
@@ -44,11 +44,11 @@ def process_jsonl(input_file, output_file, dataset, debug_mode=False):
                 system_msg, user_msg, assistant_msg = extract_input_output(data, dataset=dataset)
 
                 if user_msg and assistant_msg:
-                    classification = evaluate_safety(system_msg, user_msg, assistant_msg, dataset=dataset, debug_mode=debug_mode)
+                    classification = evaluate_safety(system_msg, user_msg, assistant_msg, version=version, debug_mode=debug_mode)
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
-                        "is_hallucination": data['extra']['is_hallucination'],
+                        "is_hallucination": data["calls"][0]["extra"]["is_hallucination"],
                         'supervisor': 'lenotre0',
                         "system_msg": system_msg,
                         "user_msg": user_msg,
@@ -64,10 +64,10 @@ def main():
     """
     Main function to process the JSONL file for safety classification.
     """
-
     # Argument parsing
     parser = argparse.ArgumentParser(description="Evaluate model responses to harmful prompts.")
     parser.add_argument("--input_file", type=str, help="Name of the file of the input JSONL file.", default="jbb-JBC")
+    parser.add_argument("--version", type=int, help="Version of the evaluation prompt to use.", default=0)
     parser.add_argument("--debug_mode", help="Enable debug mode.", default=True)
     args = parser.parse_args()
 
@@ -77,7 +77,7 @@ def main():
     output_file = "outputs/" + "evaluation_" + args.input_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
 
     print(f"Processing file: {input_file}")
-    process_jsonl(input_file, output_file, args.input_file, args.debug_mode)
+    process_jsonl(input_file, output_file, args.input_file, args.version, args.debug_mode)
     print(f"Results saved to: {output_file}")
 
 
