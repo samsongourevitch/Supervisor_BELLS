@@ -26,6 +26,10 @@ def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False)
 
                 if user_msg and assistant_msg:
                     classification = evaluate_safety(system_msg, user_msg, assistant_msg, version=version, debug_mode=debug_mode)
+                    if classification == "no failure":
+                        classification = False
+                    else:
+                        classification = True
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
@@ -46,6 +50,10 @@ def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False)
 
                 if user_msg and assistant_msg:
                     classification = evaluate_safety(system_msg, user_msg, assistant_msg, version=version, debug_mode=debug_mode)
+                    if classification == "no failure":
+                        classification = False
+                    else:
+                        classification = True
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
