@@ -1,6 +1,6 @@
 # LeNotre: Simple LLM-based Input-Output Safeguard
 
-<img src="diagram.png" alt="LLM Supervision Diagram" width="50%">
+<img src="images/diagram.png" alt="LLM Supervision Diagram" width="50%">
 
 ## Introduction
 
@@ -31,3 +31,15 @@ Each dataset is a JSONL file which contain (among others) the following fields w
 ## Experiments
 
 We first form the traces <code>(input, output)</code> from the datasets and then apply LeNotre to flag them as consistent or not. LeNotre can thus be seen as a simple binary classifier, whose performance can be assessed using the ground truth field. We look at precision, recall and accuracy of LeNotre on the two datasets. We then compare it with other LLM safeguards.
+
+## Results
+
+### jbb-JB dataset (jailbreak)
+
+<img src="images/visualization_jbb-JBC.png" alt="Performance on jbb-JBC dataset" width="50%">
+
+We obtain 100% recall and 90% precision on the <code>jbb-JBC</code> dataset. This is better than all the other LLM safeguards we compare against, except <code>langkit_proactive</code> which has 100% precision but very low recall.
+
+### traces_unrealistic dataset (hallucinations)
+
+<img src="images/visualization_traces_unrealistic.png" alt="Performance on traces_unrealistic dataset" width="50%">
