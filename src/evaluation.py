@@ -6,6 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 from supervisor import evaluate_safety
 from utils import extract_input_output, jsonl_to_df
+import time
 
 # Set your API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -46,29 +47,19 @@ def main():
 
     # Argument parsing
     parser = argparse.ArgumentParser(description="Evaluate model responses to harmful prompts.")
-    parser.add_argument("--input_file", type=str, help="Path to the input JSONL file.", default="metadata.jsonl")
-    parser.add_argument("--output_file", type=str, help="Path to save the evaluation results.", default="evaluations.csv")
-    parser.add_argument("--dataset", type=str, help="Dataset name.", default="jbb-JBC")
+    parser.add_argument("--input_file", type=str, help="Name of the file of the input JSONL file.", default="jbb-JBC")
+    parser.add_argument("--output_file", type=str, help="Name of the file to save the evaluation results.", default="evaluations")
     parser.add_argument("--debug_mode", help="Enable debug mode.", default=True)
     args = parser.parse_args()
 
     # Input and output file paths
-    input_file = "datasets/" + args.input_file
-    output_file = "outputs/" + args.output_file
+    input_file = "datasets/" + args.input_file + ".jsonl"
+    # add day and time to the output file name
+    output_file = "outputs/" + args.output_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
 
     print(f"Processing file: {input_file}")
     process_jsonl(input_file, output_file, args.dataset, args.debug_mode)
     print(f"Results saved to: {output_file}")
-
-    # Load the data from the other supervisor as well as from ours into a DataFrame
-    df_other_supervisors = jsonl_to_df(input_file, args.dataset)
-    df_lenotre = pd.read_csv(output_file)
-
-    # Merge the two DataFrames
-    df_merged = pd.concat([df_other_supervisors, df_lenotre])
-
-    # Save the merged DataFrame to a CSV file
-    df_merged.to_csv('outputs/merged_evaluations', index=False)
 
 
 if __name__ == "__main__":
