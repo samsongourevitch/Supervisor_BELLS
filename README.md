@@ -68,4 +68,8 @@ Also, note that the <code>jbb-JBC</code> dataset is relatively small, which mean
 <img src="images/visualization_traces_unrealistic.png" alt="Performance on traces_unrealistic dataset" width="50%">
 </div>
 
-On the <code>traces_unrealistic</code> dataset, we obtain 44% accuracy, 100% recall, and 44% precision. This is average compared to the other LLM safeguards we compare against. The low precision is due to the fact that LeNotre flags many traces as failures which are not. This is because the prompt used is not well-suited for the way LeNotre is used here. Indeed, the prompt is designed to mislead the model into answering something that is not true. However, the ground truth is set so that we don't consider it an hallucination if the model answers something that is not true but that is implied by the prompt. However, as the answer the model gives is not true, LeNotre flags it as a failure. This is why the precision is low.
+On the <code>traces_unrealistic</code> dataset, we achieve 45% accuracy, 100% recall, and 45% precision. Compared to other LLM safeguards, this performance is average.
+
+The low precision is because LeNotre flags many responses as failures, even when they technically align with the ground truth. This happens because the prompt used in this evaluation is not well-suited to LeNotre's intended use. Specifically, the prompt is designed to mislead the model into producing an untrue response. However, in this dataset, an untrue response implied by the prompt is not considered a hallucination according to the ground truth.
+
+Since LeNotre flags any untrue response as a failure, even when it matches the prompt's implication, the precision is reduced. This is a limitation of the current evaluation setup, and a more appropriate prompt should be used to evaluate LeNotre on hallucinations.
