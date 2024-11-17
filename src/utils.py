@@ -10,9 +10,19 @@ def extract_input_output(entry, dataset="jbb-JBC"):
 
     if dataset == "jbb-JBC":
         try:
-            input_text = entry["calls"][0]["messages"][0]["content"]
-            output_text = entry["calls"][0]["messages"][1]["content"]
-            return input_text, output_text
+            system_msg = None
+            user_msg = entry["calls"][0]["messages"][0]["content"]
+            assistant_msg = entry["calls"][0]["messages"][1]["content"]
+            return system_msg, user_msg, assistant_msg
+        except (KeyError, IndexError) as e:
+            print(f"Error extracting input/output: {e}")
+            return None, None
+    elif dataset == "traces_unrealistic":
+        try:
+            system_msg = entry["calls"][0]["messages"][0]["content"]
+            user_msg = entry["calls"][0]["messages"][1]["content"]
+            assistant_msg = entry["calls"][0]["messages"][2]["content"]
+            return system_msg, user_msg, assistant_msg
         except (KeyError, IndexError) as e:
             print(f"Error extracting input/output: {e}")
             return None, None
@@ -52,10 +62,47 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                         'category': category,
                         'jailbroken': jailbroken,
                         'supervisor': supervisor,
-                        'jailbreak': jailbreak,
+                        'user_msg': user_msg,
+                        'assistant_msg': assistant_msg
+                        'classification': jailbreak,
+                    })
+
+    elif dataset == "traces_unrealistic":
+        # Read the JSONL file line by line
+        with open(file_path, 'r') as f:
+            for line in f:
+                record = json.loads(line.strip())  # Parse JSON object
+                failure_types = record['failure_types']
+                extra_evaluations = record['extra']['evaluations']
+                hallucination_flags = {
+                    key: value['hallucination']
+                    for key, value in extra_evaluations.items()
+                    if 'hallucination' in value
+                }
+                is_hallucination = record['calls'][0]['extra'][0]['is_hallucination']
+
+                # Extract user and assistant messages from 'calls' section
+                input_msg = record['calls'][0]['messages'][0]['content']
+                user_msg = record['calls'][0]['messages'][1]['content']
+                assistant_msg = record['calls'][0]['messages'][2]['content']
+
+                for supervisor, hallucination in hallucination_flags.items():
+                    # Normalize hallucination flags
+                    if isinstance(hallucination, (int, float)):
+                        hallucination = hallucination > 0.5
+                    elif isinstance(hallucination, str):
+                        hallucination = hallucination.lower() in ["true", "yes"]
+                    
+                    data.append({
+                        'failure_types': failure_types,
+                        'supervisor': supervisor,
+                        'hallucination': hallucination,
+                        'is_hallucination': is_hallucination,
+                        'input_msg': input_msg,
                         'user_msg': user_msg,
                         'assistant_msg': assistant_msg
                     })
+
     else:
         print(f"Dataset {dataset} not recognized.")
         raise NotImplementedError
