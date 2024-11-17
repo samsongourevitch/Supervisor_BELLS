@@ -49,7 +49,7 @@ def main():
     parser.add_argument("--input_file", type=str, help="Path to the input JSONL file.", default="metadata.jsonl")
     parser.add_argument("--output_file", type=str, help="Path to save the evaluation results.", default="evaluations.csv")
     parser.add_argument("--dataset", type=str, help="Dataset name.", default="jbb-JBC")
-    parser.add_argument("--debug_mode", help="Enable debug mode.", default=False)
+    parser.add_argument("--debug_mode", help="Enable debug mode.", default=True)
     args = parser.parse_args()
 
     # Input and output file paths
@@ -69,6 +69,7 @@ def main():
 
     # Save the merged DataFrame to a CSV file
     df_merged.to_csv('outputs/merged_evaluations', index=False)
+
 
 if __name__ == "__main__":
     main()
