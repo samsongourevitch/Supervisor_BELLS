@@ -43,5 +43,5 @@ def compare_supervisor_perf(df, dataset):
     plt.show()
 
 
-df = jsonl_to_df('datasets/jbb-JBC.jsonl', 'jbb-JBC')
-compare_supervisor_perf(df, 'jbb-JBC')
+# df = jsonl_to_df('datasets/jbb-JBC.jsonl', 'jbb-JBC')
+# compare_supervisor_perf(df, 'jbb-JBC')
