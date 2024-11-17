@@ -45,6 +45,21 @@ Each dataset is a JSONL file which contain (among others) the following fields w
 4. ground truth (i.e. whether the trace is harmful (in the case of jailbreaks) or consistent (in the case of hallucination))
 5. predictions by various LLM safeguards (i.e. for each safeguard, whether it flagged the trace)
 
+## Usage
+
+To run the experiments, you need to install the dependencies in `requirements.txt` and then run the following command:
+
+```bash python src/evaluation.py --help``` to understand the arguments.
+
+```python src/evaluation.py --input_file jbb-JBC --version 2 --merge True --debug_mode False ``` to run the experiments on the jbb-JB dataset.
+
+To visualize the results, you can run the following command:
+
+```bash python src/visualization.py --help``` to understand the arguments.
+
+```bash python src/visualization.py --file_path outputs/evaluation_merged_jbb-JBC_1117-1635.csv  --dataset jbb-JBC``` to visualize the results on the jbb-JB dataset.
+
+
 ## Experiments
 
 We first create the traces from the datasets and then apply LeNotre to flag them as a failure of the model (if the attack succeds or if it hallucinates) or success. LeNotre can thus be seen as a simple binary classifier, whose performance can be assessed using the ground truth field. We look at precision, recall and accuracy of LeNotre on the two datasets. We then compare it with other LLM safeguards.
