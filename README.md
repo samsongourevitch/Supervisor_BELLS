@@ -49,15 +49,15 @@ Each dataset is a JSONL file which contain (among others) the following fields w
 
 To run the experiments, you need to install the dependencies in `requirements.txt` and then run the following command:
 
-```bash python src/evaluation.py --help``` to understand the arguments.
+```python src/evaluation.py --help``` to understand the arguments.
 
 ```python src/evaluation.py --input_file jbb-JBC --version 2 --merge True --debug_mode False ``` to run the experiments on the jbb-JB dataset.
 
 To visualize the results, you can run the following command:
 
-```bash python src/visualization.py --help``` to understand the arguments.
+```python src/visualization.py --help``` to understand the arguments.
 
-```bash python src/visualization.py --file_path outputs/evaluation_merged_jbb-JBC_1117-1635.csv  --dataset jbb-JBC``` to visualize the results on the jbb-JB dataset.
+```python src/visualization.py --file_path outputs/evaluation_merged_jbb-JBC_1117-1635.csv  --dataset jbb-JBC``` to visualize the results on the jbb-JB dataset.
 
 
 ## Experiments
