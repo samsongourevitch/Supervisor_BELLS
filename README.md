@@ -39,7 +39,9 @@ We first create the traces from the datasets and then apply LeNotre to flag them
 
 ### jbb-JB dataset (jailbreak)
 
+<div align="center">
 <img src="images/visualization_jbb-JBC.png" alt="Performance on jbb-JBC dataset" width="50%">
+</div>
 
 We obtain 100% recall and 90% precision on the <code>jbb-JBC</code> dataset. This is better than all the other LLM safeguards we compare against, except <code>langkit_proactive</code> which has 100% precision but very low recall.
 
@@ -48,4 +50,6 @@ Also, note that the <code>jbb-JBC</code> dataset is relatively small, which mean
 
 ### traces_unrealistic dataset (hallucinations)
 
+<div align="center">
 <img src="images/visualization_traces_unrealistic.png" alt="Performance on traces_unrealistic dataset" width="50%">
+</div>
