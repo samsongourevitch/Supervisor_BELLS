@@ -57,7 +57,7 @@ def process_jsonl(input_file, output_file, dataset, version=0, debug_mode=False)
                     # Append the result with the classification
                     results.append({
                         "dataset": data['dataset'],
-                        "is_hallucination": data["calls"][0]["extra"]["is_hallucination"],
+                        "is_hallucination": data["calls"]["extra"]["is_hallucination"],
                         'supervisor': 'lenotre0',
                         "system_msg": system_msg,
                         "user_msg": user_msg,
