@@ -45,6 +45,8 @@ Each dataset is a JSONL file which contain (among others) the following fields w
 4. ground truth (i.e. whether the trace is harmful (in the case of jailbreaks) or consistent (in the case of hallucination))
 5. predictions by various LLM safeguards (i.e. for each safeguard, whether it flagged the trace)
 
+For now, the project only handles those two datasets because of the slight differences in format between the different json files but the code can easily be adapted to handle all of them.
+
 ## Usage
 
 To run the experiments, you need to install the dependencies in `requirements.txt` and then run the following command:
