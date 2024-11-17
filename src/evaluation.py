@@ -114,6 +114,7 @@ def main():
         output_file_merged = "outputs/" + "evaluation_merged_" + args.input_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
         df_merged.to_csv(output_file_merged, index=False)
         print(f"Merged results saved to: {output_file_merged}")
+        print("run python src/visualization.py --file_path " + output_file_merged + "--dataset " + args.dataset + " to compare the performance of different supervisors")
 
 if __name__ == "__main__":
     main()
