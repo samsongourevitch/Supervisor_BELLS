@@ -81,7 +81,7 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                     for key, value in extra_evaluations.items()
                     if 'hallucination' in value
                 }
-                is_hallucination = record['calls'][0]['extra'][0]['is_hallucination']
+                is_hallucination = record['calls'][0]['extra']['is_hallucination']
 
                 # Extract user and assistant messages from 'calls' section
                 system_msg = record['calls'][0]['messages'][0]['content']
