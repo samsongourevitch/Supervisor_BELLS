@@ -57,7 +57,7 @@ We first create the traces from the datasets and then apply LeNotre to flag them
 <img src="images/visualization_jbb-JBC.png" alt="Performance on jbb-JBC dataset" width="50%">
 </div>
 
-We obtain 100% recall and 90% precision on the <code>jbb-JBC</code> dataset. This is better than all the other LLM safeguards we compare against, except <code>langkit_proactive</code> which has 100% precision but very low recall.
+On the <code>jbb-JBC</code> dataset, we obtain 90% accuracy, 100% recall and 90% precision. This is better than all the other LLM safeguards we compare against, except <code>langkit_proactive</code> which has 100% precision but very low recall.
 
 It might seem surprising at first that our simple model outperforms more complex safeguards. This is because LeNotre was designed to deal with jailbreaks and hallucinations, and is thus more specialized than the other safeguards which are more general. For instance, some safeguards are designed to prevent prompt injection, which is not the case here. Thus, the non-general nature of LeNotre explains why it performs better than the other safeguards.
 Also, note that the <code>jbb-JBC</code> dataset is relatively small, which means that the performance of the safeguards is not necessarily representative of their performance on larger datasets. Likewise for LeNotre.
@@ -67,3 +67,5 @@ Also, note that the <code>jbb-JBC</code> dataset is relatively small, which mean
 <div align="center">
 <img src="images/visualization_traces_unrealistic.png" alt="Performance on traces_unrealistic dataset" width="50%">
 </div>
+
+On the <code>traces_unrealistic<code> dataset, we obtain 44% accuracy, 100% recall, and 44% precision. This is average compared to the other LLM safeguards we compare against. The low precision is due to the fact that LeNotre flags many traces as failures which are not. This is because the prompt used is not well-suited for the way LeNotre is used here. Indeed, the prompt is designed to mislead the model into answering something that is not true. However, the ground truth is set so that we don't consider it an hallucination if the model answers something that is not true but that is implied by the prompt. However, as the answer the model gives is not true, LeNotre flags it as a failure. This is why the precision is low.
