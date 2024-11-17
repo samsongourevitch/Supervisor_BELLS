@@ -46,12 +46,10 @@ def compare_supervisor_perf(df_name, dataset):
 
 def main():
     parser = argparse.ArgumentParser(description='Compare supervisor performance')
-    parser.add_argument('file_path', type=str, help='Path to the csv file')
-    parser.add_argument('dataset', type=str, help='Dataset to evaluate')
+    parser.add_argument('--file_path', type=str, help='Path to the csv file')
+    parser.add_argument('--dataset', type=str, help='Dataset to evaluate')
     args = parser.parse_args()
-
-    df = jsonl_to_df(args.file_path, args.dataset)
-    compare_supervisor_perf(df, args.dataset)
+    compare_supervisor_perf(args.file_path, args.dataset)
 
 if __name__ == '__main__':
     main()
