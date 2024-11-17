@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from utils import jsonl_to_df
 import seaborn as sns
+import argparse
 
 sns.set_theme()
 
@@ -27,7 +28,8 @@ def assess_supervisor_perf(df, dataset):
     return pd.Series({'accuracy': accuracy, 'recall': recall, 'precision': precision})
 
 
-def compare_supervisor_perf(df, dataset):
+def compare_supervisor_perf(df_name, dataset):
+    df = pd.read_csv(df_name)
     perfs = df.groupby('supervisor').apply(assess_supervisor_perf, dataset)
     # three bar plot: accuracy, recall, precision
     fig, axs = plt.subplots(3, 1, figsize=(10, 10))
@@ -42,6 +44,14 @@ def compare_supervisor_perf(df, dataset):
     plt.tight_layout()
     plt.show()
 
+def main():
+    parser = argparse.ArgumentParser(description='Compare supervisor performance')
+    parser.add_argument('file_path', type=str, help='Path to the csv file')
+    parser.add_argument('dataset', type=str, help='Dataset to evaluate')
+    args = parser.parse_args()
 
-# df = jsonl_to_df('datasets/jbb-JBC.jsonl', 'jbb-JBC')
-# compare_supervisor_perf(df, 'jbb-JBC')
+    df = jsonl_to_df(args.file_path, args.dataset)
+    compare_supervisor_perf(df, args.dataset)
+
+if __name__ == '__main__':
+    main()
