@@ -58,7 +58,7 @@ def main():
     output_file = "outputs/" + args.output_file + "_" + time.strftime("%m%d-%H%M") + ".csv"
 
     print(f"Processing file: {input_file}")
-    process_jsonl(input_file, output_file, args.dataset, args.debug_mode)
+    process_jsonl(input_file, output_file, args.input_file, args.debug_mode)
     print(f"Results saved to: {output_file}")
 
 
