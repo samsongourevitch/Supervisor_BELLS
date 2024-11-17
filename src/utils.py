@@ -63,7 +63,7 @@ def jsonl_to_df(file_path, dataset="jbb-JBC"):
                         'jailbroken': jailbroken,
                         'supervisor': supervisor,
                         'user_msg': user_msg,
-                        'assistant_msg': assistant_msg
+                        'assistant_msg': assistant_msg,
                         'classification': jailbreak,
                     })
 
