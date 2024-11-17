@@ -1,6 +1,8 @@
 # LeNotre: Simple LLM-based Input-Output Safeguard
 
+<div align="center">
 <img src="images/diagram.png" alt="LLM Supervision Diagram" width="50%">
+</div>
 
 ## Introduction
 
